@@ -34,9 +34,9 @@ namespace MelodicAnalyzer
 			durations [currentnote] = duration;
 			currentnote++;
 		}
-		public float[] analyze(string[] sequ)
+		public float[] analyze(string[] sequ,int numberofnotes)
 		{
-			float[] output;
+			float[] output=new float[numberofnotes];
 			for (int x=0; x<sequ.Length; x++) {
 				for (int n=0; n<natural.Length; n++) {
 					try{
