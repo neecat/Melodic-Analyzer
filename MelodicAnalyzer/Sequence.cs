@@ -28,8 +28,23 @@ namespace MelodicAnalyzer
 			notestotal = numberofnotes;
 		}
 
+		public void poll()
+		{
+			string note;
+			float notelength;
+			Console.Write ("What note would you like to add?: ");
+			note = Console.ReadLine ();
+			Console.Write ("What length is it?(in 8th notes): ");
+			notelength = Console.ReadLine ();
+			addNote (note, notelength); 
+		}
+
 		public void addNote(string note,float duration)
 		{
+			/* Need to make sure to add something that will separate
+			 * the note letter from the octave modifier.
+			 * Also, there needs to be an octave modifier...
+			 */
 			userinput [currentnote] = note;
 			durations [currentnote] = duration;
 			currentnote++;
