@@ -8,7 +8,6 @@ namespace MelodicAnalyzer
 		//Class Variables
 		//modification: addition of float vars - April 9th, 2013 - 10:18:00 EDT
 		//Associate Letters and Sharps to floating decimal numberss
-
 		//modification: translated to C# and moved into a class - July 30, 2013 - 06:51:00 EDT
 		string[] natnoteletters = { "C", "D", "E", "F", "G", "A", "B" };
 		float[] natural={1.0f,2.0f,3.0f,3.5f,4.5f,5.5f,6.5f};
@@ -31,11 +30,13 @@ namespace MelodicAnalyzer
 		public void poll()
 		{
 			string note;
+			string input;
 			float notelength;
 			Console.Write ("What note would you like to add?: ");
 			note = Console.ReadLine ();
 			Console.Write ("What length is it?(in 8th notes): ");
-			notelength = Console.ReadLine ();
+			input =Console.ReadLine ();
+			notelength = float.Parse (input);
 			addNote (note, notelength); 
 		}
 
@@ -52,19 +53,21 @@ namespace MelodicAnalyzer
 		public float[] analyze(string[] sequ,int numberofnotes)
 		{
 			float[] output=new float[numberofnotes];
+			int octavemodifier=0;
 			for (int x=0; x<sequ.Length; x++) {
+				octavemodifier = checkforoctave (sequ [x]);
 				for (int n=0; n<natural.Length; n++) {
 					try{
 						if (sequ [x] == sharpnoteletters [x]) {
-							output [x] = sharp [x];
+							output [x] = sharp [x]*octavemodifier;
 							break;
 						}
 						if (sequ [x] == flatnoteletters [x]) {
-							output [x] = flat [x];
+							output [x] = flat [x]*octavemodifier;
 							break;
 						}
 						if (sequ [x] == natnoteletters [x]) {
-							output [x] = natural [x];
+							output [x] = natural [x]*octavemodifier;
 							break;
 						}
 					}catch(IndexOutOfRangeException e) {
@@ -73,6 +76,16 @@ namespace MelodicAnalyzer
 				}
 			}
 			 return output;
+		}
+		public int checkforoctave(string data)
+		{
+			int octave=0;
+			if (data [1] == '#' || data [1] == 'b') {
+				return (int)data [2];
+			} else {
+				return (int)data [1];
+			}
+			return octave;
 		}
 	}
 }
